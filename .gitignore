@@ -2,7 +2,8 @@
 Makefile.in
 *.userprefs
 *.usertasks
-*.xcuserstate
+xcuserdata/
+*.xctimeline
 config.make
 config.status
 aclocal.m4
