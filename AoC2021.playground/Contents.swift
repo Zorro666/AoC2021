@@ -1,3 +1,1 @@
-import Cocoa
-
-var greeting = "Hello, playground"
+Day01.Run()
