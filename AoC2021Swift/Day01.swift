@@ -1,5 +1,3 @@
-import Foundation
-
 /*
 
 --- Day 1: Sonar Sweep ---
@@ -86,24 +84,23 @@ You're minding your own business on a ship at sea when the overboard alarm goes 
 
  */
 
-public func Parse(day:String) -> [Int]
-{
-  let fileURL = Bundle.main.url(forResource: "input", withExtension: "txt", subdirectory: day)!
-  let fileContents = try? String(contentsOf: fileURL)
-  let myStrings = fileContents!.components(separatedBy: .newlines)
-  var values:[Int] = []
-  for line in myStrings {
-    if (line.isEmpty) {
-        continue
-    }
-    let v = Int(line)
-    values.append(v!)
-  }
-  return values
-}
+import Foundation
 
 public class Day01
 {
+  public static func Parse(lines:[String]) -> [Int]
+  {
+    var values:[Int] = []
+    for line in lines {
+      if (line.isEmpty) {
+          continue
+      }
+      let v = Int(line)
+      values.append(v!)
+    }
+    return values
+  }
+  
   public static func CountWindow(values:[Int], window:Int) -> Int
   {
     var result = 0
@@ -118,7 +115,8 @@ public class Day01
 
   public static func Execute(part1:Bool)
   {
-    let vals = Parse(day: "Day01")
+    let lines = Program.ReadLines(day: "day01")
+    let vals = Parse(lines: lines)
 
     if (part1)
     {
