@@ -88,12 +88,14 @@ You're minding your own business on a ship at sea when the overboard alarm goes 
 
 public func Parse(day:String) -> [Int]
 {
-  let fileName = day + "/input"
-  let fileURL = Bundle.main.url(forResource: fileName, withExtension: "txt")!
+  let fileURL = Bundle.main.url(forResource: "input", withExtension: "txt", subdirectory: day)!
   let fileContents = try? String(contentsOf: fileURL)
   let myStrings = fileContents!.components(separatedBy: .newlines)
   var values:[Int] = []
   for line in myStrings {
+    if (line.isEmpty) {
+        continue
+    }
     let v = Int(line)
     values.append(v!)
   }
