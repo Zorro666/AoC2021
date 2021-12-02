@@ -15,6 +15,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
   func applicationDidFinishLaunching(_ aNotification: Notification) {
     Program.Run()
+    exit(0)
   }
 
   func applicationWillTerminate(_ aNotification: Notification) {

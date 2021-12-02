@@ -56,7 +56,7 @@ import Foundation
  After following these new instructions, you would have a horizontal position of 15 and a depth of 60. (Multiplying these produces 900.)
 
  Using this new interpretation of the commands, calculate the horizontal position and depth you would have after following the planned course. What do you get if you multiply your final horizontal position by your final depth?
- 
+
  */
 
 public class Day02
@@ -98,6 +98,24 @@ public class Day02
     return x * y
   }
 
+  public static func MoveSub2(moves:[String]) -> Int
+  {
+    var aim = 0
+    var x = 0
+    var y = 0
+    for move in moves {
+      var dx = 0
+      var dy = 0
+      SingleMove(move: move, dx: &dx, dy: &dy)
+      aim += dy
+      if dx != 0 {
+        x += dx
+        y += aim * dx
+      }
+    }
+    return x * y
+  }
+
   public static func Execute(part1:Bool)
   {
     let lines = Program.ReadLines(day: "day02")
@@ -105,7 +123,7 @@ public class Day02
     if (part1)
     {
       let result = MoveSub(moves:lines)
-      let expected = 1581
+      let expected = 2117664
       if (result != expected)
       {
         assert(result == expected, "Part1 is broken expected \(expected) got \(result)")
@@ -114,8 +132,8 @@ public class Day02
     }
     else
     {
-      let result = 20
-      let expected = 1618
+      let result = MoveSub2(moves:lines)
+      let expected = 2073416724
       if (result != expected)
       {
         assert(result == expected, "Part2 is broken expected \(expected) got \(result)")
