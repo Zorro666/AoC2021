@@ -160,6 +160,9 @@
 		23E4C6BE2759072C00F109FB /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				23E4C6C02759072C00F109FB /* day01.txt */,
+				23E4C6C927594E7600F109FB /* day02.txt */,
+				23E4C6D12759C06800F109FB /* day03.txt */,
 				23E4C6DE2759C10800F109FB /* day04.txt */,
 				23E4C6DC2759C10800F109FB /* day05.txt */,
 				23E4C6DA2759C10800F109FB /* day06.txt */,
@@ -182,9 +185,6 @@
 				23E4C6D82759C10800F109FB /* day23.txt */,
 				23E4C6DD2759C10800F109FB /* day24.txt */,
 				23E4C6E62759C10900F109FB /* day25.txt */,
-				23E4C6C02759072C00F109FB /* day01.txt */,
-				23E4C6C927594E7600F109FB /* day02.txt */,
-				23E4C6D12759C06800F109FB /* day03.txt */,
 			);
 			path = Resources;
 			sourceTree = "<group>";

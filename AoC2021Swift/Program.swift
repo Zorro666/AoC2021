@@ -12,8 +12,19 @@ class Program
 
   public static func Run()
   {
-    Day01.Run()
+    let args = CommandLine.arguments
+    var dayToRun = -1
+    if args.count  > 1 {
+      dayToRun = Int(args[1])!
+    }
+    if (dayToRun == 1) || (dayToRun == -1) {
+      Day01.Run()
+    }
+    if (dayToRun == 2) || (dayToRun == -1) {
     Day02.Run()
+    }
+    if (dayToRun == 3) || (dayToRun == -1) {
     Day03.Run()
+    }
   }
 }
