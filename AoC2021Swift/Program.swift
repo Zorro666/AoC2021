@@ -14,5 +14,6 @@ class Program
   {
     Day01.Run()
     Day02.Run()
+    Day03.Run()
   }
 }
