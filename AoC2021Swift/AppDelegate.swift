@@ -1,10 +1,3 @@
-//
-//  AppDelegate.swift
-//  AoC2021Swift
-//
-//  Created by Jake on 02/12/2021.
-//
-
 import Cocoa
 
 @main
@@ -12,10 +5,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
   @IBOutlet var window: NSWindow!
 
-
   func applicationDidFinishLaunching(_ aNotification: Notification) {
+    if (NSClassFromString("XCTest") == nil) {
     Program.Run()
     exit(0)
+    }
   }
 
   func applicationWillTerminate(_ aNotification: Notification) {
@@ -26,6 +20,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     return true
   }
 
-
+  func applicationWillUpdate(_ notification: Notification) {
+  }
 }
 

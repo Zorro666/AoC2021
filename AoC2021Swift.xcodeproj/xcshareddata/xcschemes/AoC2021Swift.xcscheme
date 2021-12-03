@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "232E0A7C2759037000FF09F5"
+               BlueprintIdentifier = "23E4C691275906E500F109FB"
                BuildableName = "AoC2021Swift.app"
                BlueprintName = "AoC2021Swift"
                ReferencedContainer = "container:AoC2021Swift.xcodeproj">
@@ -32,19 +32,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "232E0A8A2759037000FF09F5"
+               BlueprintIdentifier = "23E4C69F275906E600F109FB"
                BuildableName = "AoC2021SwiftTests.xctest"
                BlueprintName = "AoC2021SwiftTests"
-               ReferencedContainer = "container:AoC2021Swift.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "232E0A942759037000FF09F5"
-               BuildableName = "AoC2021SwiftUITests.xctest"
-               BlueprintName = "AoC2021SwiftUITests"
                ReferencedContainer = "container:AoC2021Swift.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -64,7 +54,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "232E0A7C2759037000FF09F5"
+            BlueprintIdentifier = "23E4C691275906E500F109FB"
             BuildableName = "AoC2021Swift.app"
             BlueprintName = "AoC2021Swift"
             ReferencedContainer = "container:AoC2021Swift.xcodeproj">
@@ -81,7 +71,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "232E0A7C2759037000FF09F5"
+            BlueprintIdentifier = "23E4C691275906E500F109FB"
             BuildableName = "AoC2021Swift.app"
             BlueprintName = "AoC2021Swift"
             ReferencedContainer = "container:AoC2021Swift.xcodeproj">
