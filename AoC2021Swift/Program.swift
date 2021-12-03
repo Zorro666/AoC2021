@@ -26,5 +26,26 @@ class Program
     if (dayToRun == 3) || (dayToRun == -1) {
       Day03.Run()
     }
+    if (dayToRun == 4) || (dayToRun == -1) {
+      Day04.Run()
+    }
+    if (dayToRun == 5) || (dayToRun == -1) {
+      Day05.Run()
+    }
+    if (dayToRun == 6) || (dayToRun == -1) {
+      Day06.Run()
+    }
+    if (dayToRun == 7) || (dayToRun == -1) {
+      Day07.Run()
+    }
+    if (dayToRun == 8) || (dayToRun == -1) {
+      Day08.Run()
+    }
+    if (dayToRun == 9) || (dayToRun == -1) {
+      Day09.Run()
+    }
+    if (dayToRun == 10) || (dayToRun == -1) {
+      Day10.Run()
+    }
   }
 }
