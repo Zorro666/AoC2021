@@ -21,10 +21,10 @@ class Program
       Day01.Run()
     }
     if (dayToRun == 2) || (dayToRun == -1) {
-    Day02.Run()
+      Day02.Run()
     }
     if (dayToRun == 3) || (dayToRun == -1) {
-    Day03.Run()
+      Day03.Run()
     }
   }
 }
