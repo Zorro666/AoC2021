@@ -5,9 +5,9 @@ import Foundation
 
  */
 
-public class Day18
+class Day18
 {
-  public static func Execute(part1:Bool)
+  static func Execute(part1:Bool)
   {
     let lines = Program.ReadLines(day: "day18")
 
@@ -33,7 +33,7 @@ public class Day18
     }
   }
 
-  public static func Run()
+  static func Run()
   {
     Execute(part1: true)
     Execute(part1: false)

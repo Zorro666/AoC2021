@@ -2,7 +2,7 @@ import Foundation
 
 class Program
 {
-  public static func ReadLines(day:String) -> [String]
+  static func ReadLines(day:String) -> [String]
   {
     let fileURL = Bundle.main.url(forResource: day, withExtension: "txt")!
     let fileContents = try? String(contentsOf: fileURL)
@@ -10,7 +10,7 @@ class Program
     return myStrings
   }
 
-  public static func Run()
+  static func Run()
   {
     let args = CommandLine.arguments
     var dayToRun = -1

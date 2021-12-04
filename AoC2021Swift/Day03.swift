@@ -71,9 +71,9 @@ import Foundation
  Use the binary numbers in your diagnostic report to calculate the oxygen generator rating and CO2 scrubber rating, then multiply them together. What is the life support rating of the submarine? (Be sure to represent your answer in decimal, not binary.)
  */
 
-public class Day03
+class Day03
 {
-  public static func Execute(part1:Bool)
+  static func Execute(part1:Bool)
   {
     let lines = Program.ReadLines(day: "day03")
 
@@ -99,138 +99,121 @@ public class Day03
     }
   }
 
-  public static func MostCommon(lines:[String], index:Int, ones:inout Int, zeroes:inout Int) {
-    let bitCount = lines[0].count
-    var linesCount = 0
-    ones = 0
-    zeroes = 0
-    for line in lines {
-      if (line.isEmpty) {
-        continue
-      }
-      linesCount += 1
-      assert(bitCount == line.count)
-      let c = line[line.index(line.startIndex, offsetBy: index)]
-        if (c == "1") {
-          ones += 1
-        }
-      else {
-        zeroes += 1
-      }
+  static func CountMatches(values:[Int], match:Int, mask:Int) -> Int {
+    var count = 0
+    for v in values {
+      count += ((v & mask) == match) ? 1 : 0
     }
+    return count
   }
 
-  public static func Power(lines:[String]) -> Int
+  static func BinaryStringToInt(string:String) -> Int
   {
+    var value = 0;
+    for c in string {
+      value *= 2
+      if (c == "1") {
+        value += 1
+      }
+    }
+    return value
+  }
+
+  static func Power(lines:[String]) -> Int
+  {
+    var values:[Int] = []
     let bitCount = lines[0].count
+    for line in lines {
+      if (line.isEmpty) {
+          continue;
+      }
+      let value = BinaryStringToInt(string:line)
+      values.append(value)
+    }
+    let midCount = values.count / 2
     var gamma = 0
     var epsilon = 0
-    for i in 0..<bitCount {
-      epsilon *= 2
-      gamma *= 2
-      var ones = 0
-      var zeroes = 0
-      MostCommon(lines:lines, index:i, ones:&ones, zeroes:&zeroes)
-      if (ones > zeroes) {
-        gamma += 1
+    for i in 1...bitCount {
+      let match = 1 << (bitCount-i)
+      let mask = match
+      let ones = CountMatches(values:values, match:match, mask:mask)
+      if (ones > midCount) {
+        gamma |= match
       }
       else {
-        epsilon += 1
+        epsilon |= match
       }
     }
     return epsilon * gamma
   }
 
-  public static func LifeSupport(lines:[String]) -> Int
+  static func LifeSupport(lines:[String]) -> Int
   {
+    var values:[Int] = []
     let bitCount = lines[0].count
-    var linesCount = 0
-    var baseMatches:[String] = []
     for line in lines {
       if (line.isEmpty) {
-        continue
+          continue;
       }
-      linesCount += 1
-      assert(bitCount == line.count)
-      baseMatches.append(line)
+      let value = BinaryStringToInt(string:line)
+      values.append(value)
     }
 
-    var matchString = ""
-    var matches = baseMatches
-
-    for i in 0..<bitCount {
-      var newMatches:[String] = []
-      for line in matches {
-        let substr = line.prefix(i)
-        if (substr == matchString) {
-          newMatches.append(line)
-        }
-      }
-      var ones = 0
-      var zeroes = 0
-      MostCommon(lines: newMatches, index: i, ones: &ones, zeroes: &zeroes)
-      if (ones >= zeroes) {
-        matchString += "1"
+    var match = 0
+    var mask = 0
+    var previousMatchCount = values.count
+    for i in 1...bitCount {
+      let bitIndex = bitCount - i
+      let bitMask = 1 << bitIndex
+      let newMatch = match | bitMask
+      mask |= bitMask
+      var matchCount = CountMatches(values:values, match:newMatch, mask:mask)
+      let noMatchCount = previousMatchCount - matchCount
+      if matchCount >= noMatchCount {
+        match = newMatch
       }
       else {
-        matchString += "0"
+        matchCount = noMatchCount
       }
-      matches = newMatches
-      if matches.count == 1 {
-        matchString = matches[0]
-        break
-      }
+      previousMatchCount = matchCount
     }
 
-    let oxygenString = matchString
+    let oxygen = match
 
-    matchString = ""
-    matches = baseMatches
-
-    for i in 0..<bitCount {
-      var newMatches:[String] = []
-      for line in matches {
-        let substr = line.prefix(i)
-        if (substr == matchString) {
-          newMatches.append(line)
+    match = 0
+    mask = 0
+    previousMatchCount = values.count
+    for i in 1...bitCount {
+      let bitIndex = bitCount - i
+      let bitMask = 1 << bitIndex
+      let newMatch = match | bitMask
+      mask |= bitMask
+      var matchCount = CountMatches(values:values, match:newMatch, mask:mask)
+      let noMatchCount = previousMatchCount - matchCount
+      if (previousMatchCount > 1) {
+        if (matchCount < noMatchCount) {
+          match = newMatch
+        }
+        else {
+          matchCount = noMatchCount
         }
       }
-      var ones = 0
-      var zeroes = 0
-      MostCommon(lines: newMatches, index: i, ones: &ones, zeroes: &zeroes)
-      if (zeroes <= ones) {
-        matchString += "0"
-      }
       else {
-        matchString += "1"
+        if (matchCount == 1) {
+          match = newMatch
+        }
+        else {
+          matchCount = noMatchCount
+        }
       }
-      matches = newMatches
-      if matches.count == 1 {
-        matchString = matches[0]
-        break
-      }
+      previousMatchCount = matchCount
     }
 
-    let co2String = matchString
-
-    var oxygen = 0
-    var co2 = 0
-    for i in 0..<bitCount {
-      oxygen *= 2
-      co2 *= 2
-      let o = oxygenString[oxygenString.index(oxygenString.startIndex, offsetBy: i)]
-      if (o == "1") {
-        oxygen += 1
-      }
-      let c = co2String[co2String.index(co2String.startIndex, offsetBy: i)]
-      if (c == "1") {
-        co2 += 1
-      }
-    }
+    let co2 = match
     return oxygen * co2
   }
 
-  public static func Run()
+  static func Run()
   {
     Execute(part1: true)
     Execute(part1: false)

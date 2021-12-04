@@ -86,9 +86,9 @@ You're minding your own business on a ship at sea when the overboard alarm goes 
 
 import Foundation
 
-public class Day01
+class Day01
 {
-  public static func Parse(lines:[String]) -> [Int]
+  static func Parse(lines:[String]) -> [Int]
   {
     var values:[Int] = []
     for line in lines {
@@ -101,7 +101,7 @@ public class Day01
     return values
   }
   
-  public static func CountWindow(values:[Int], window:Int) -> Int
+  static func CountWindow(values:[Int], window:Int) -> Int
   {
     var result = 0
     let count = values.count
@@ -113,7 +113,7 @@ public class Day01
     return result
   }
 
-  public static func Execute(part1:Bool)
+  static func Execute(part1:Bool)
   {
     let lines = Program.ReadLines(day: "day01")
     let vals = Parse(lines: lines)
@@ -140,7 +140,7 @@ public class Day01
     }
   }
 
-  public static func Run()
+  static func Run()
   {
     Execute(part1: true)
     Execute(part1: false)
