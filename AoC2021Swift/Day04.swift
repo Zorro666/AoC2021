@@ -91,7 +91,7 @@ class Day04
     else
     {
       let result = Part2(lines: lines)
-      let expected = 2073416724
+      let expected = 5586
       if (result != expected)
       {
         assert(result == expected, "Part2 is broken expected \(expected) got \(result)")
@@ -100,15 +100,16 @@ class Day04
     }
   }
 
-  static func Part1(lines:[String]) -> Int {
-    var values:[Int] = []
+  static var boards:[Int] = []
+  static var boardsUsed:[Bool] = []
+  static var values:[Int] = []
+
+  static func Parse(lines:[String]) -> Int {
     for t in lines[0].split(separator: ",") {
       let v = Int(t)!
       values.append(v)
     }
 
-    var boards:[Int] = []
-    var boardsUsed:[Bool] = []
     var boardStart = true
     var b = 0
     var y = 0
@@ -135,33 +136,45 @@ class Day04
         b += 1
       }
     }
+    return b
+  }
 
-//    for i in 0..<b {
-//      for y in 0..<5 {
-//        var l = ""
-//        for x in 0..<5 {
-//          let v = boards[i*25+y*5+x]
-//          l += String(v)
-//          l += " "
-//        }
-//        print(l)
-//      }
-//      print("")
-//    }
+  static func ComputeScore(bingoBoard:Int) -> Int {
+    var score = 0
+    for y in 0..<5 {
+      for x in 0..<5 {
+        let index = bingoBoard*25+y*5+x
+        if boardsUsed[index] == false {
+          score += boards[index]
+        }
+      }
+    }
+    return score
+  }
+
+  static func PlayBingo(lines:[String], firstScore:Bool) -> Int {
+    let b = Parse(lines:lines)
+
     let boardCount = boards.count
-    var bingoBoard = -1
-    var pickedNumber = -1
     var bingo = false
+    var score = -1
+    var completedBoards:[Bool] = []
+    for _ in 0..<b {
+      completedBoards.append(false)
+    }
+
     for v in values {
       for i in 0..<boardCount {
         if (boards[i] == v) {
           boardsUsed[i] = true
         }
       }
-      pickedNumber = v
       bingo = false
       // Check for completed rows or columns
       for i in 0..<b {
+        if (completedBoards[i]) {
+          continue
+        }
         for y in 0..<5 {
           bingo = true
           for x in 0..<5 {
@@ -172,49 +185,41 @@ class Day04
             }
           }
           if bingo {
-            bingoBoard = i
-            break
+            completedBoards[i] = true
+            score = ComputeScore(bingoBoard: i) * v
+            if (firstScore) {
+              return score
+            }
           }
-        }
-        if bingo {
-          break
         }
         for x in 0..<5 {
           bingo = true
           for y in 0..<5 {
-            let index = boards[i*25+y*5+x]
+            let index = i*25+y*5+x
             if boardsUsed[index] == false {
               bingo = false
               break
             }
           }
           if bingo {
-            bingoBoard = i
-            break
+            completedBoards[i] = true
+            score = ComputeScore(bingoBoard: i) * v
+            if (firstScore) {
+              return score
+            }
           }
         }
-        if bingo {
-          break
-        }
-      }
-      if bingo {
-        break
       }
     }
-    var score = 0
-    for y in 0..<5 {
-      for x in 0..<5 {
-        let index = bingoBoard*25+y*5+x
-        if boardsUsed[index] == false {
-          score += boards[index]
-        }
-      }
-    }
-    return score * pickedNumber
+    return score
+  }
+
+  static func Part1(lines:[String]) -> Int {
+    return PlayBingo(lines:lines, firstScore:true)
   }
 
   static func Part2(lines:[String]) -> Int {
-    return -10
+    return PlayBingo(lines:lines, firstScore:false)
   }
 
   static func Run()
