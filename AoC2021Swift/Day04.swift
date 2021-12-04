@@ -58,6 +58,18 @@ import Foundation
 
  To guarantee victory against the giant squid, figure out which board will win first. What will your final score be if you choose that board?
 
+ Your puzzle answer was 35711.
+
+ --- Part Two ---
+
+ On the other hand, it might be wise to try a different strategy: let the giant squid win.
+
+ You aren't sure how many bingo boards a giant squid could play at once, so rather than waste time counting its arms, the safe thing to do is to figure out which board will win last and choose that one. That way, no matter which boards it picks, it will win for sure.
+
+ In the above example, the second board is the last to win, which happens after 13 is eventually called and its middle column is completely marked. If you were to keep playing until this point, the second board would have a sum of unmarked numbers equal to 148 for a final score of 148 * 13 = 1924.
+
+ Figure out which board will win last. Once it wins, what would its final score be?
+ 
  */
 
 class Day04
@@ -68,8 +80,8 @@ class Day04
 
     if (part1)
     {
-      let result = -10
-      let expected = 2117664
+      let result = Part1(lines: lines)
+      let expected = 35711
       if (result != expected)
       {
         assert(result == expected, "Part1 is broken expected \(expected) got \(result)")
@@ -78,7 +90,7 @@ class Day04
     }
     else
     {
-      let result = -20
+      let result = Part2(lines: lines)
       let expected = 2073416724
       if (result != expected)
       {
@@ -86,6 +98,123 @@ class Day04
       }
       print("Day04 Part2: \(result)")
     }
+  }
+
+  static func Part1(lines:[String]) -> Int {
+    var values:[Int] = []
+    for t in lines[0].split(separator: ",") {
+      let v = Int(t)!
+      values.append(v)
+    }
+
+    var boards:[Int] = []
+    var boardsUsed:[Bool] = []
+    var boardStart = true
+    var b = 0
+    var y = 0
+    for i in 1..<lines.count {
+      let line = lines[i]
+      if line.isEmpty && boardStart {
+        y = 0
+        boardStart = false
+        continue
+      }
+      assert(!line.isEmpty)
+      assert(!boardStart)
+
+      var x = 0
+      for t in line.split(separator: " ") {
+        assert(x < 5)
+        boards.append(Int(t)!)
+        boardsUsed.append(false)
+        x += 1
+      }
+      y += 1
+      if (y == 5) {
+        boardStart = true
+        b += 1
+      }
+    }
+
+//    for i in 0..<b {
+//      for y in 0..<5 {
+//        var l = ""
+//        for x in 0..<5 {
+//          let v = boards[i*25+y*5+x]
+//          l += String(v)
+//          l += " "
+//        }
+//        print(l)
+//      }
+//      print("")
+//    }
+    let boardCount = boards.count
+    var bingoBoard = -1
+    var pickedNumber = -1
+    var bingo = false
+    for v in values {
+      for i in 0..<boardCount {
+        if (boards[i] == v) {
+          boardsUsed[i] = true
+        }
+      }
+      pickedNumber = v
+      bingo = false
+      // Check for completed rows or columns
+      for i in 0..<b {
+        for y in 0..<5 {
+          bingo = true
+          for x in 0..<5 {
+            let index = i*25+y*5+x
+            if boardsUsed[index] == false {
+              bingo = false
+              break
+            }
+          }
+          if bingo {
+            bingoBoard = i
+            break
+          }
+        }
+        if bingo {
+          break
+        }
+        for x in 0..<5 {
+          bingo = true
+          for y in 0..<5 {
+            let index = boards[i*25+y*5+x]
+            if boardsUsed[index] == false {
+              bingo = false
+              break
+            }
+          }
+          if bingo {
+            bingoBoard = i
+            break
+          }
+        }
+        if bingo {
+          break
+        }
+      }
+      if bingo {
+        break
+      }
+    }
+    var score = 0
+    for y in 0..<5 {
+      for x in 0..<5 {
+        let index = bingoBoard*25+y*5+x
+        if boardsUsed[index] == false {
+          score += boards[index]
+        }
+      }
+    }
+    return score * pickedNumber
+  }
+
+  static func Part2(lines:[String]) -> Int {
+    return -10
   }
 
   static func Run()
