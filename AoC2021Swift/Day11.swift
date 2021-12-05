@@ -1,8 +1,8 @@
 import Foundation
 
 /*
-
-
+ 
+ 
  */
 
 class Day11
@@ -10,10 +10,10 @@ class Day11
   static func Execute(part1:Bool)
   {
     let lines = Program.ReadLines(day: "day11")
-
+    
     if (part1)
     {
-      let result = -10
+      let result = Part1(lines: lines)
       let expected = 2117664
       if (result != expected)
       {
@@ -23,7 +23,7 @@ class Day11
     }
     else
     {
-      let result = -20
+      let result = Part2(lines: lines)
       let expected = 2073416724
       if (result != expected)
       {
@@ -32,7 +32,15 @@ class Day11
       print("Day11 Part2: \(result)")
     }
   }
-
+  
+  static func Part1(lines:[String]) -> Int {
+    return 123
+  }
+  
+  static func Part2(lines:[String]) -> Int {
+    return 5443
+  }
+  
   static func Run()
   {
     Execute(part1: true)
