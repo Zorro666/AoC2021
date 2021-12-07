@@ -16,16 +16,20 @@ class Day05Tests: XCTestCase {
 5,5 -> 8,2
 """
 
+  static var lines:[String] = []
+
+  override class func setUp() {
+    Day05Tests.lines = Day05Tests.input.components(separatedBy: ["\n"])
+  }
+
   func testPart1() throws {
-    let lines = Day05Tests.input.components(separatedBy: ["\n"])
-    let actual = Day05.Part1(lines: lines)
+    let actual = Day05.Part1(lines: Day05Tests.lines)
     let expected = 5
     XCTAssertEqual(expected, actual)
   }
   
   func testPart2() throws {
-    let lines = Day05Tests.input.components(separatedBy: ["\n"])
-    let actual = Day05.Part2(lines: lines)
+    let actual = Day05.Part2(lines: Day05Tests.lines)
     let expected = 12
     XCTAssertEqual(expected, actual)
   }

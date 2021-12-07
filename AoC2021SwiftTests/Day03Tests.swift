@@ -17,17 +17,22 @@ class Day03Tests: XCTestCase {
 00010
 01010
 """
+
+  static var lines:[String] = []
+
+  override class func setUp() {
+    Day03Tests.lines = Day03Tests.input.components(separatedBy: ["\n"])
+  }
+
   func testPower() throws {
-    let lines = Day03Tests.input.components(separatedBy: ["\n"])
     let expected = 198
-    let actual = Day03.Power(lines:lines)
+    let actual = Day03.Power(lines:Day03Tests.lines)
     XCTAssertEqual(expected, actual)
   }
   
   func testLifeSupport() throws {
-    let lines = Day03Tests.input.components(separatedBy: ["\n"])
     let expected = 230
-    let actual = Day03.LifeSupport(lines:lines)
+    let actual = Day03.LifeSupport(lines:Day03Tests.lines)
     XCTAssertEqual(expected, actual)
   }
 }

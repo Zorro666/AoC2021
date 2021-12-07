@@ -24,17 +24,21 @@ class Day04Tests: XCTestCase {
 22 11 13  6  5
  2  0 12  3  7
 """
+  static var lines:[String] = []
+
+  override class func setUp() {
+    Day04Tests.lines = Day04Tests.input.components(separatedBy: ["\n"])
+  }
+
   func testPart1() throws {
-    let lines = Day04Tests.input.components(separatedBy: ["\n"])
     let expected = 4512
-    let actual = Day04.Part1(lines: lines)
+    let actual = Day04.Part1(lines: Day04Tests.lines)
     XCTAssertEqual(expected, actual)
   }
   
   func testPart2() throws {
-    let lines = Day04Tests.input.components(separatedBy: ["\n"])
     let expected = 1924
-    let actual = Day04.Part2(lines: lines)
+    let actual = Day04.Part2(lines: Day04Tests.lines)
     XCTAssertEqual(expected, actual)
   }
 }

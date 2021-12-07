@@ -11,18 +11,21 @@ up 3
 down 8
 forward 2
 """
-  
+
+  static var lines:[String] = []
+
+  override class func setUp() {
+    Day02Tests.lines = Day02Tests.input.components(separatedBy: ["\n"])
+  }
   func testMoveSub() throws {
-    let lines = Day02Tests.input.components(separatedBy: ["\n"])
     let expected = 150
-    let result = Day02.MoveSub(moves:lines)
+    let result = Day02.MoveSub(moves:Day02Tests.lines)
     XCTAssertEqual(expected, result)
   }
   
   func testMoveSub2() throws {
-    let lines = Day02Tests.input.components(separatedBy: ["\n"])
     let expected = 900
-    let result = Day02.MoveSub2(moves:lines)
+    let result = Day02.MoveSub2(moves:Day02Tests.lines)
     XCTAssertEqual(expected, result)
   }
 }
