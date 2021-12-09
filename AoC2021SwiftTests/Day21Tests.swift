@@ -5,17 +5,21 @@ class Day21Tests: XCTestCase {
   
   static let input = """
 """
+
+  override class func setUp() {
+    let lines = self.input.components(separatedBy: ["\n"])
+    Day21.Parse(lines: lines)
+  }
+
   func testPart1() throws {
-    let lines = Day21Tests.input.components(separatedBy: ["\n"])
     let expected = 5
-    let actual = Day21.Part1(lines: lines)
+    let actual = Day21.Part1()
     XCTAssertEqual(expected, actual)
   }
 
   func testPart2() throws {
-    let lines = Day21Tests.input.components(separatedBy: ["\n"])
     let expected = 12
-    let actual = Day21.Part2(lines: lines)
+    let actual = Day21.Part2()
     XCTAssertEqual(expected, actual)
   }
 }

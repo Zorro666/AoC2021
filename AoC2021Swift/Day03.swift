@@ -109,7 +109,7 @@ class Day03
   
   static func BinaryStringToInt(string:String) -> Int
   {
-    var value = 0;
+    var value = 0
     for c in string {
       value *= 2
       if (c == "1") {
@@ -125,7 +125,7 @@ class Day03
     let bitCount = lines[0].count
     for line in lines {
       if (line.isEmpty) {
-        continue;
+        continue
       }
       let value = BinaryStringToInt(string:line)
       values.append(value)
@@ -153,7 +153,7 @@ class Day03
     let bitCount = lines[0].count
     for line in lines {
       if (line.isEmpty) {
-        continue;
+        continue
       }
       let value = BinaryStringToInt(string:line)
       values.append(value)

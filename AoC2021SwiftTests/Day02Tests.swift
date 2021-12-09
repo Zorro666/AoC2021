@@ -17,6 +17,7 @@ forward 2
   override class func setUp() {
     Day02Tests.lines = Day02Tests.input.components(separatedBy: ["\n"])
   }
+  
   func testMoveSub() throws {
     let expected = 150
     let result = Day02.MoveSub(moves:Day02Tests.lines)

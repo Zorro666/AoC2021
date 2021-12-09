@@ -10,10 +10,11 @@ class Day16
   static func Execute(part1:Bool)
   {
     let lines = Program.ReadLines(day: "day16")
-    
+    Parse(lines:lines)
+
     if (part1)
     {
-      let result = Part1(lines: lines)
+      let result = Part1()
       let expected = 2117664
       if (result != expected)
       {
@@ -23,7 +24,7 @@ class Day16
     }
     else
     {
-      let result = Part2(lines: lines)
+      let result = Part2()
       let expected = 2073416724
       if (result != expected)
       {
@@ -33,11 +34,19 @@ class Day16
     }
   }
   
-  static func Part1(lines:[String]) -> Int {
+  static func Parse(lines:[String]) {
+    for l in lines {
+      if l.isEmpty {
+        continue
+      }
+    }
+  }
+
+  static func Part1() -> Int {
     return 123
   }
   
-  static func Part2(lines:[String]) -> Int {
+  static func Part2() -> Int {
     return 5443
   }
   

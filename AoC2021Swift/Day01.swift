@@ -121,7 +121,7 @@ class Day01
     if (part1)
     {
       let result = Day01.CountWindow(values: vals, window: 1)
-      let expected = 1581;
+      let expected = 1581
       if (result != expected)
       {
         assert(result == expected, "Part1 is broken expected \(expected) got \(result)")
@@ -131,7 +131,7 @@ class Day01
     else
     {
       let result = Day01.CountWindow(values: vals, window: 3)
-      let expected = 1618;
+      let expected = 1618
       if (result != expected)
       {
         assert(result == expected, "Part2 is broken expected \(expected) got \(result)")
