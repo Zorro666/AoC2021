@@ -70,11 +70,11 @@ import Foundation
 
 class Day09
 {
-  static var grid:[Int] = []
-  static var visited:[Bool] = []
-  static var width = 0
-  static var height = 0
-  static func Execute(part1:Bool)
+  var grid:[Int] = []
+  var visited:[Bool] = []
+  var width = 0
+  var height = 0
+  func Execute(part1:Bool)
   {
     let lines = Program.ReadLines(day: "day09")
     Parse(lines:lines)
@@ -101,7 +101,7 @@ class Day09
     }
   }
   
-  static func Parse(lines:[String]) {
+  func Parse(lines:[String]) {
     width = lines[0].count
     height = 0
     grid = [Int](repeatElement(0, count: width*width))
@@ -119,7 +119,7 @@ class Day09
     }
   }
   
-  static func GetGrid(x:Int, y:Int) ->Int {
+  func GetGrid(x:Int, y:Int) ->Int {
     if x < 0 || x >= width {
       assertionFailure()
     }
@@ -129,7 +129,7 @@ class Day09
     return grid[y*width+x]
   }
   
-  static func FindLowPoints() -> [Int] {
+  func FindLowPoints() -> [Int] {
     var lowPoints:[Int] = []
     for y in 0..<height {
       for x in 0..<width {
@@ -152,7 +152,7 @@ class Day09
     return lowPoints
   }
   
-  static func Part1() -> Int {
+  func Part1() -> Int {
     var total = 0
     let lows = FindLowPoints()
     for l in lows {
@@ -161,7 +161,7 @@ class Day09
     return total
   }
   
-  static func FindBasin(x:Int, y:Int) -> Int {
+  func FindBasin(x:Int, y:Int) -> Int {
     var count = 0
     if visited[y*width+x] == true {
       return count;
@@ -186,7 +186,7 @@ class Day09
     return count
   }
   
-  static func Part2() -> Int {
+  func Part2() -> Int {
     let lows = FindLowPoints()
     var low0 = Int.min
     var low1 = Int.min
@@ -212,7 +212,7 @@ class Day09
     return low0*low1*low2
   }
   
-  static func Run()
+  func Run()
   {
     Execute(part1: true)
     Execute(part1: false)

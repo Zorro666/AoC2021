@@ -73,7 +73,7 @@ import Foundation
 
 class Day03
 {
-  static func Execute(part1:Bool)
+  func Execute(part1:Bool)
   {
     let lines = Program.ReadLines(day: "day03")
     
@@ -99,7 +99,7 @@ class Day03
     }
   }
   
-  static func CountMatches(values:[Int], match:Int, mask:Int) -> Int {
+  func CountMatches(values:[Int], match:Int, mask:Int) -> Int {
     var count = 0
     for v in values {
       count += ((v & mask) == match) ? 1 : 0
@@ -107,7 +107,7 @@ class Day03
     return count
   }
   
-  static func BinaryStringToInt(string:String) -> Int
+  func BinaryStringToInt(string:String) -> Int
   {
     var value = 0
     for c in string {
@@ -119,7 +119,7 @@ class Day03
     return value
   }
   
-  static func Power(lines:[String]) -> Int
+  func Power(lines:[String]) -> Int
   {
     var values:[Int] = []
     let bitCount = lines[0].count
@@ -147,7 +147,7 @@ class Day03
     return epsilon * gamma
   }
   
-  static func LifeSupport(lines:[String]) -> Int
+  func LifeSupport(lines:[String]) -> Int
   {
     var values:[Int] = []
     let bitCount = lines[0].count
@@ -213,7 +213,7 @@ class Day03
     return oxygen * co2
   }
   
-  static func Run()
+  func Run()
   {
     Execute(part1: true)
     Execute(part1: false)

@@ -66,8 +66,8 @@ import Foundation
 
 class Day06
 {
-  static var countAges:[Int] = []
-  static func Execute(part1:Bool)
+  var countAges:[Int] = []
+  func Execute(part1:Bool)
   {
     let lines = Program.ReadLines(day: "day06")
     
@@ -93,7 +93,7 @@ class Day06
     }
   }
   
-  static func OneDay() {
+  func OneDay() {
     let ageZero = countAges[0]
     for age in 0..<8 {
       countAges[age] = countAges[age+1]
@@ -102,7 +102,7 @@ class Day06
     countAges[6] += ageZero
   }
   
-  static func Parse(lines:[String]) {
+  func Parse(lines:[String]) {
     countAges = [Int](repeating: 0, count: 9)
     for l in lines {
       if (l.isEmpty) {
@@ -116,7 +116,7 @@ class Day06
     }
   }
   
-  static func Simulate(days:Int) -> Int {
+  func Simulate(days:Int) -> Int {
     for _ in 0..<days {
       OneDay()
     }
@@ -127,17 +127,17 @@ class Day06
     return total
   }
   
-  static func Part1(lines:[String]) -> Int {
+  func Part1(lines:[String]) -> Int {
     Parse(lines:lines)
     return Simulate(days:80)
   }
   
-  static func Part2(lines:[String]) -> Int {
+  func Part2(lines:[String]) -> Int {
     Parse(lines:lines)
     return Simulate(days:256)
   }
   
-  static func Run()
+  func Run()
   {
     Execute(part1: true)
     Execute(part1: false)

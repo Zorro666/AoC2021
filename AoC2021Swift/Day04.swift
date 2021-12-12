@@ -74,7 +74,7 @@ import Foundation
 
 class Day04
 {
-  static func Execute(part1:Bool)
+  func Execute(part1:Bool)
   {
     let lines = Program.ReadLines(day: "day04")
     
@@ -100,11 +100,11 @@ class Day04
     }
   }
   
-  static var boards:[Int] = []
-  static var boardsUsed:[Bool] = []
-  static var values:[Int] = []
+  var boards:[Int] = []
+  var boardsUsed:[Bool] = []
+  var values:[Int] = []
   
-  static func Parse(lines:[String]) -> Int {
+  func Parse(lines:[String]) -> Int {
     for t in lines[0].split(separator: ",") {
       let v = Int(t)!
       values.append(v)
@@ -139,7 +139,7 @@ class Day04
     return b
   }
   
-  static func ComputeScore(bingoBoard:Int) -> Int {
+  func ComputeScore(bingoBoard:Int) -> Int {
     var score = 0
     for y in 0..<5 {
       for x in 0..<5 {
@@ -152,7 +152,7 @@ class Day04
     return score
   }
   
-  static func PlayBingo(lines:[String], firstScore:Bool) -> Int {
+  func PlayBingo(lines:[String], firstScore:Bool) -> Int {
     let b = Parse(lines:lines)
     
     let boardCount = boards.count
@@ -214,15 +214,15 @@ class Day04
     return score
   }
   
-  static func Part1(lines:[String]) -> Int {
+  func Part1(lines:[String]) -> Int {
     return PlayBingo(lines:lines, firstScore:true)
   }
   
-  static func Part2(lines:[String]) -> Int {
+  func Part2(lines:[String]) -> Int {
     return PlayBingo(lines:lines, firstScore:false)
   }
   
-  static func Run()
+  func Run()
   {
     Execute(part1: true)
     Execute(part1: false)

@@ -98,14 +98,14 @@ import Foundation
 
 class Day10
 {
-  static var input:[String] = []
-  static var incomplete:[String] = []
-  static var missing:String = ""
-  static var line:String = ""
-  static var pos:Int = 0;
-  static var len:Int = 0;
+  var input:[String] = []
+  var incomplete:[String] = []
+  var missing:String = ""
+  var line:String = ""
+  var pos:Int = 0;
+  var len:Int = 0;
   
-  static func Execute(part1:Bool)
+  func Execute(part1:Bool)
   {
     let lines = Program.ReadLines(day: "day10")
     Parse(lines:lines)
@@ -132,7 +132,7 @@ class Day10
     }
   }
   
-  static func Parse(lines:[String]) {
+  func Parse(lines:[String]) {
     input = []
     for l in lines {
       if l.isEmpty {
@@ -142,7 +142,7 @@ class Day10
     }
   }
   
-  static func FindMatch(match:Character) -> Bool {
+  func FindMatch(match:Character) -> Bool {
     pos += 1
     while pos < len {
       let c = line[line.index(line.startIndex, offsetBy: pos)]
@@ -178,7 +178,7 @@ class Day10
     return true
   }
   
-  static func Part1() -> Int {
+  func Part1() -> Int {
     incomplete = []
     var score = 0
     for l in input {
@@ -244,7 +244,7 @@ class Day10
     return score
   }
   
-  static func Part2() -> Int {
+  func Part2() -> Int {
     _ = Part1()
     var scores:[Int] = []
     for i in incomplete {
@@ -287,7 +287,7 @@ class Day10
     return -123
   }
   
-  static func Run()
+  func Run()
   {
     Execute(part1: true)
     Execute(part1: false)

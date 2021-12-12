@@ -2,8 +2,9 @@ import XCTest
 @testable import AoC2021Swift
 
 class Day08Tests: XCTestCase {
-  
-  static let input = """
+
+  var day:Day08 = Day08()
+  let input = """
 be cfbegad cbdgef fgaecd cgeb fdcge agebfd fecdb fabcd edb | fdgacbe cefdb cefbgd gcbe
 edbfga begcd cbg gc gcadebf fbgde acbgfd abcde gfcbed gfec | fcgedb cgb dgebacf gc
 fgaebd cg bdaec gdafb agbcfd gdcbef bgcad gfac gcb cdgabef | cg cg fdcagb cbg
@@ -16,20 +17,20 @@ egadfb cdbfeg cegd fecab cgb gbdefca cg fgcdab egfdb bfceg | gbdfcae bgc cg cgb
 gcafb gcf dcaebfg ecagb gf abcdeg gaef cafbge fdbac fegbdc | fgae cfgab fg bagce
 """
   
-  override class func setUp() {
-    let lines = self.input.components(separatedBy: ["\n"])
-    Day08.Parse(lines: lines)
+  override func setUp() {
+    let lines = input.components(separatedBy: ["\n"])
+    day.Parse(lines: lines)
   }
   
   func testPart1() throws {
     let expected = 26
-    let actual = Day08.Part1()
+    let actual = day.Part1()
     XCTAssertEqual(expected, actual)
   }
   
   func testPart2() throws {
     let expected = 61229
-    let actual = Day08.Part2()
+    let actual = day.Part2()
     XCTAssertEqual(expected, actual)
   }
 }

@@ -7,7 +7,7 @@ import Foundation
 
 class Day18
 {
-  static func Execute(part1:Bool)
+  func Execute(part1:Bool)
   {
     let lines = Program.ReadLines(day: "day18")
     Parse(lines:lines)
@@ -34,7 +34,7 @@ class Day18
     }
   }
   
-  static func Parse(lines:[String]) {
+  func Parse(lines:[String]) {
     for l in lines {
       if l.isEmpty {
         continue
@@ -42,15 +42,15 @@ class Day18
     }
   }
 
-  static func Part1() -> Int {
+  func Part1() -> Int {
     return 123
   }
   
-  static func Part2() -> Int {
+  func Part2() -> Int {
     return 5443
   }
   
-  static func Run()
+  func Run()
   {
     Execute(part1: true)
     Execute(part1: false)

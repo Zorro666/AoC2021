@@ -139,11 +139,11 @@ import Foundation
 
 class Day08
 {
-  static var signals:[String] = []
-  static var outputs:[String] = []
-  static var countMessages:Int = 0
+  var signals:[String] = []
+  var outputs:[String] = []
+  var countMessages:Int = 0
   
-  static func Execute(part1:Bool)
+  func Execute(part1:Bool)
   {
     let lines = Program.ReadLines(day: "day08")
     Parse(lines:lines)
@@ -170,7 +170,7 @@ class Day08
     }
   }
   
-  static func Parse(lines:[String]) {
+  func Parse(lines:[String]) {
     countMessages = 0
     signals = [String](repeating: "", count: 1000*10)
     outputs = [String](repeating: "", count: 1000*4)
@@ -196,7 +196,7 @@ class Day08
     countMessages = m
   }
   
-  static func Contains(a:String, b:String) -> Bool {
+  func Contains(a:String, b:String) -> Bool {
     for c in b {
       if !a.contains(c) {
         return false
@@ -205,7 +205,7 @@ class Day08
     return true
   }
   
-  static func FindByCount(message:Int, count:Int) -> String {
+  func FindByCount(message:Int, count:Int) -> String {
     for s in 0..<10 {
       let signal = signals[message*10+s]
       if signal.count == count {
@@ -216,7 +216,7 @@ class Day08
     return ""
   }
   
-  static func FindByStringAndCount(message:Int, string:String, count:Int) -> String {
+  func FindByStringAndCount(message:Int, string:String, count:Int) -> String {
     for s in 0..<10 {
       let signal = signals[message*10+s]
       if signal == string {
@@ -232,7 +232,7 @@ class Day08
     return ""
   }
   
-  static func Difference(a:String, b:String) -> String {
+  func Difference(a:String, b:String) -> String {
     var diff = ""
     for c in a {
       if !b.contains(c) {
@@ -280,7 +280,7 @@ class Day08
   // Find 5 char inputs which contain ABDG -> 5
   // Difference between 5 & ABDG: gives F
   
-  static func DecodeMessage(message:Int) -> Int {
+  func DecodeMessage(message:Int) -> Int {
     let one = FindByCount(message: message, count: 2)
     let four = FindByCount(message: message, count: 4)
     let seven = FindByCount(message: message, count: 3)
@@ -326,7 +326,7 @@ class Day08
     return total
   }
   
-  static func CountOutputsByLength(len:Int) -> Int {
+  func CountOutputsByLength(len:Int) -> Int {
     var ones = 0
     for m in 0..<countMessages {
       for i in 0..<4 {
@@ -339,7 +339,7 @@ class Day08
     return ones
   }
   
-  static func Part1() -> Int {
+  func Part1() -> Int {
     let ones = CountOutputsByLength(len: 2)
     let fours = CountOutputsByLength(len: 4)
     let sevens = CountOutputsByLength(len: 3)
@@ -348,7 +348,7 @@ class Day08
     return ones + fours + sevens + eights
   }
   
-  static func Part2() -> Int {
+  func Part2() -> Int {
     var total = 0
     for m in 0..<countMessages {
       total += DecodeMessage(message: m)
@@ -356,7 +356,7 @@ class Day08
     return total
   }
   
-  static func Run()
+  func Run()
   {
     Execute(part1: true)
     Execute(part1: false)

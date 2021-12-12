@@ -62,11 +62,11 @@ import Foundation
 
 class Day07
 {
-  static var countPositions:[Int] = []
-  static var minPosition = Int.max
-  static var maxPosition = Int.min
+  var countPositions:[Int] = []
+  var minPosition = Int.max
+  var maxPosition = Int.min
   
-  static func Execute(part1:Bool)
+  func Execute(part1:Bool)
   {
     let lines = Program.ReadLines(day: "day07")
     Parse(lines: lines)
@@ -93,7 +93,7 @@ class Day07
     }
   }
   
-  static func Parse(lines:[String]) {
+  func Parse(lines:[String]) {
     countPositions = [Int](repeating: 0, count: 2048)
     for l in lines {
       if (l.isEmpty) {
@@ -109,7 +109,7 @@ class Day07
     }
   }
   
-  static func FuelCost(position:Int) -> Int {
+  func FuelCost(position:Int) -> Int {
     var fuelCost = 0
     for p in minPosition...maxPosition {
       fuelCost += abs(p-position) * countPositions[p]
@@ -117,7 +117,7 @@ class Day07
     return fuelCost
   }
   
-  static func MinPosition() -> Int {
+  func MinPosition() -> Int {
     var minFuel = Int.max
     var minPos = Int.min
     for p in minPosition...maxPosition {
@@ -130,7 +130,7 @@ class Day07
     return minPos
   }
   
-  static func FuelCost2(position:Int) -> Int {
+  func FuelCost2(position:Int) -> Int {
     //sum = SUM(1,2,3...N)
     //sum = (N+1)*N)/2
     var fuelCost = 0
@@ -142,7 +142,7 @@ class Day07
     return fuelCost
   }
   
-  static func MinPosition2() -> Int {
+  func MinPosition2() -> Int {
     var minFuel = Int.max
     var minPos = Int.min
     for p in minPosition...maxPosition {
@@ -155,19 +155,19 @@ class Day07
     return minPos
   }
   
-  static func Part1() -> Int {
+  func Part1() -> Int {
     let minPosition = MinPosition()
     let fuelCost = FuelCost(position: minPosition)
     return fuelCost
   }
   
-  static func Part2() -> Int {
+  func Part2() -> Int {
     let minPosition = MinPosition2()
     let fuelCost = FuelCost2(position: minPosition)
     return fuelCost
   }
   
-  static func Run()
+  func Run()
   {
     Execute(part1: true)
     Execute(part1: false)

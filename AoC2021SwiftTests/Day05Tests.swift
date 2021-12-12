@@ -2,8 +2,9 @@ import XCTest
 @testable import AoC2021Swift
 
 class Day05Tests: XCTestCase {
-  
-  static let input = """
+
+  let day:Day05 = Day05()
+  let input = """
 0,9 -> 5,9
 8,0 -> 0,8
 9,4 -> 3,4
@@ -16,20 +17,20 @@ class Day05Tests: XCTestCase {
 5,5 -> 8,2
 """
 
-  static var lines:[String] = []
+  var lines:[String] = []
 
-  override class func setUp() {
-    Day05Tests.lines = Day05Tests.input.components(separatedBy: ["\n"])
+  override func setUp() {
+    lines = input.components(separatedBy: ["\n"])
   }
 
   func testPart1() throws {
-    let actual = Day05.Part1(lines: Day05Tests.lines)
+    let actual = day.Part1(lines: lines)
     let expected = 5
     XCTAssertEqual(expected, actual)
   }
   
   func testPart2() throws {
-    let actual = Day05.Part2(lines: Day05Tests.lines)
+    let actual = day.Part2(lines: lines)
     let expected = 12
     XCTAssertEqual(expected, actual)
   }

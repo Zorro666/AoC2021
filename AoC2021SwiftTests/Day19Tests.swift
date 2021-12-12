@@ -3,23 +3,24 @@ import XCTest
 
 class Day19Tests: XCTestCase {
 
-  static let input = """
+  let day:Day19 = Day19()
+  let input = """
 """
 
-  override class func setUp() {
-    let lines = self.input.components(separatedBy: ["\n"])
-    Day19.Parse(lines: lines)
+  override func setUp() {
+    let lines = input.components(separatedBy: ["\n"])
+    day.Parse(lines: lines)
   }
 
   func testPart1() throws {
     let expected = 5
-    let actual = Day19.Part1()
+    let actual = day.Part1()
     XCTAssertEqual(expected, actual)
   }
 
   func testPart2() throws {
     let expected = 12
-    let actual = Day19.Part2()
+    let actual = day.Part2()
     XCTAssertEqual(expected, actual)
   }
 }

@@ -349,11 +349,11 @@ import Foundation
 
 class Day11
 {
-  static var gridStart:[UInt8] = []
-  static var currentState:[UInt8] = []
-  static var flashed:[Bool] = []
+  var gridStart:[UInt8] = []
+  var currentState:[UInt8] = []
+  var flashed:[Bool] = []
   
-  static func Execute(part1:Bool)
+  func Execute(part1:Bool)
   {
     let lines = Program.ReadLines(day: "day11")
     Parse(lines:lines)
@@ -380,11 +380,11 @@ class Day11
     }
   }
   
-  static func GridIndex(x:Int, y:Int) -> Int {
+  func GridIndex(x:Int, y:Int) -> Int {
     return (y+1)*12+(x+1)
   }
   
-  static func Parse(lines:[String]) {
+  func Parse(lines:[String]) {
     gridStart = [UInt8](repeating: 0, count: 12*12)
     var y = 0
     for l in lines {
@@ -404,7 +404,7 @@ class Day11
     flashed = [Bool](repeating: false, count: 12*12)
   }
   
-  static func Simulate() -> Int {
+  func Simulate() -> Int {
     var flashedCount = 0
     for i in 0..<12*12 {
       flashed[i] = false
@@ -468,7 +468,7 @@ class Day11
     return flashedCount
   }
   
-  static func Part1(steps:Int) -> Int {
+  func Part1(steps:Int) -> Int {
     currentState = [UInt8](repeating: 0, count: 12*12)
 
     for y in 0..<10 {
@@ -485,7 +485,7 @@ class Day11
     return flashedCount
   }
   
-  static func Part2() -> Int {
+  func Part2() -> Int {
     currentState = [UInt8](repeating: 0, count: 12*12)
 
     for y in 0..<10 {
@@ -505,7 +505,7 @@ class Day11
     return -1
   }
   
-  static func Run()
+  func Run()
   {
     Execute(part1: true)
     Execute(part1: false)

@@ -73,10 +73,10 @@ import Foundation
 
 class Day05
 {
-  static let MAX_GRID = 1024
-  static var grid:[Int] = []
+  let MAX_GRID = 1024
+  var grid:[Int] = []
   
-  static func Execute(part1:Bool)
+  func Execute(part1:Bool)
   {
     let lines = Program.ReadLines(day: "day05")
     
@@ -102,7 +102,7 @@ class Day05
     }
   }
   
-  static func drawLine(x0:Int, y0:Int, x1:Int, y1:Int, diagonal:Bool)
+  func drawLine(x0:Int, y0:Int, x1:Int, y1:Int, diagonal:Bool)
   {
     var dx = x1 - x0
     var dy = y1 - y0
@@ -132,7 +132,7 @@ class Day05
     }
   }
   
-  static func Score(inputLines:[String], diagonal:Bool) -> Int {
+  func Score(inputLines:[String], diagonal:Bool) -> Int {
     var lines:[Int] = []
     grid = [Int](repeating: 0, count: MAX_GRID*MAX_GRID)
     
@@ -173,15 +173,15 @@ class Day05
     return score
   }
   
-  static func Part1(lines:[String]) -> Int {
+  func Part1(lines:[String]) -> Int {
     return Score(inputLines: lines, diagonal: false)
   }
   
-  static func Part2(lines:[String]) -> Int {
+  func Part2(lines:[String]) -> Int {
     return Score(inputLines: lines, diagonal: true)
   }
   
-  static func Run()
+  func Run()
   {
     Execute(part1: true)
     Execute(part1: false)

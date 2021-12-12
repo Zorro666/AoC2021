@@ -88,7 +88,7 @@ import Foundation
 
 class Day01
 {
-  static func Parse(lines:[String]) -> [Int]
+  func Parse(lines:[String]) -> [Int]
   {
     var values:[Int] = []
     for line in lines {
@@ -101,7 +101,7 @@ class Day01
     return values
   }
   
-  static func CountWindow(values:[Int], window:Int) -> Int
+  func CountWindow(values:[Int], window:Int) -> Int
   {
     var result = 0
     let count = values.count
@@ -113,14 +113,14 @@ class Day01
     return result
   }
   
-  static func Execute(part1:Bool)
+  func Execute(part1:Bool)
   {
     let lines = Program.ReadLines(day: "day01")
     let vals = Parse(lines: lines)
     
     if (part1)
     {
-      let result = Day01.CountWindow(values: vals, window: 1)
+      let result = CountWindow(values: vals, window: 1)
       let expected = 1581
       if (result != expected)
       {
@@ -130,7 +130,7 @@ class Day01
     }
     else
     {
-      let result = Day01.CountWindow(values: vals, window: 3)
+      let result = CountWindow(values: vals, window: 3)
       let expected = 1618
       if (result != expected)
       {
@@ -140,7 +140,7 @@ class Day01
     }
   }
   
-  static func Run()
+  func Run()
   {
     Execute(part1: true)
     Execute(part1: false)

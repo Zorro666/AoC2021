@@ -2,8 +2,9 @@ import XCTest
 @testable import AoC2021Swift
 
 class Day01Tests: XCTestCase {
-  
-  static let input = """
+
+  let day:Day01 = Day01()
+  let input = """
 199
 200
 208
@@ -16,24 +17,24 @@ class Day01Tests: XCTestCase {
 263
 """
 
-  static var vals:[Int] = []
+  var vals:[Int] = []
 
-  override class func setUp() {
-    let lines = Day01Tests.input.components(separatedBy: ["\n"])
-    Day01Tests.vals = Day01.Parse(lines: lines)
+  override func setUp() {
+    let lines = input.components(separatedBy: ["\n"])
+    vals = day.Parse(lines: lines)
   }
 
   func testCountWindow1() throws {
     let window = 1
     let expected = 7
-    let result = Day01.CountWindow(values: Day01Tests.vals, window: window)
+    let result = day.CountWindow(values: vals, window: window)
     XCTAssertEqual(expected, result)
   }
   
   func testCountWindow3() throws {
     let window = 3
     let expected = 5
-    let result = Day01.CountWindow(values: Day01Tests.vals, window: window)
+    let result = day.CountWindow(values: vals, window: window)
     XCTAssertEqual(expected, result)
   }
 }

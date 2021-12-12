@@ -7,7 +7,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
   func applicationDidFinishLaunching(_ aNotification: Notification) {
     if (NSClassFromString("XCTest") == nil) {
-    Program.Run()
+    Program().Run()
     exit(0)
     }
   }

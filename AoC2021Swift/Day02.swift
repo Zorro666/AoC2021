@@ -61,7 +61,7 @@ import Foundation
 
 class Day02
 {
-  static func SingleMove(move:String, dx: inout Int, dy: inout Int)
+  func SingleMove(move:String, dx: inout Int, dy: inout Int)
   {
     dx = 0
     dy = 0
@@ -84,7 +84,7 @@ class Day02
     }
   }
   
-  static func MoveSub(moves:[String]) -> Int
+  func MoveSub(moves:[String]) -> Int
   {
     var x = 0
     var y = 0
@@ -98,7 +98,7 @@ class Day02
     return x * y
   }
   
-  static func MoveSub2(moves:[String]) -> Int
+  func MoveSub2(moves:[String]) -> Int
   {
     var aim = 0
     var x = 0
@@ -116,7 +116,7 @@ class Day02
     return x * y
   }
   
-  static func Execute(part1:Bool)
+  func Execute(part1:Bool)
   {
     let lines = Program.ReadLines(day: "day02")
     
@@ -142,7 +142,7 @@ class Day02
     }
   }
   
-  static func Run()
+  func Run()
   {
     Execute(part1: true)
     Execute(part1: false)
