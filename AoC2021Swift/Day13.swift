@@ -141,7 +141,7 @@ class Day13
       let expected = 655
       if (result != expected)
       {
-        assert(result == expected, "Part1 is broken expected \(expected) got \(result)")
+        fatalError("Part1 is broken expected \(expected) got \(result)")
       }
       print("Day13 Part1: \(result)")
     }
@@ -160,7 +160,7 @@ class Day13
       let expected = expectedStrings.components(separatedBy: ["\n"])
       if (result != expected)
       {
-        assert(result == expected, "Part2 is broken expected \(expected) got \(result)")
+        fatalError("Part2 is broken expected \(expected) got \(result)")
       }
       print("Day13 Part2:\n\(expectedStrings)")
     }

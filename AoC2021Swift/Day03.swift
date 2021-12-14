@@ -83,7 +83,7 @@ class Day03
       let expected = 4139586
       if (result != expected)
       {
-        assert(result == expected, "Part1 is broken expected \(expected) got \(result)")
+        fatalError("Part1 is broken expected \(expected) got \(result)")
       }
       print("Day03 Part1: \(result)")
     }
@@ -93,7 +93,7 @@ class Day03
       let expected = 1800151
       if (result != expected)
       {
-        assert(result == expected, "Part2 is broken expected \(expected) got \(result)")
+        fatalError("Part2 is broken expected \(expected) got \(result)")
       }
       print("Day03 Part2: \(result)")
     }
