@@ -266,21 +266,24 @@ class Day15
 
     while nodeStart != nodeCount {
       let node = nodes[nodeStart]
+      let index = node.index
+      let risk = node.risk
+      nodes[nodeStart].index = -1
+      nodes[nodeStart].risk = Int.max
+
       nodeStart += 1
       if nodeStart == MAX_COUNT_NODES {
         nodeStart = 0
       }
-      if node.risk > minRisk {
-        continue
-      }
-      let index = node.index
-      let risk = node.risk
-      if visited[index] <= risk {
-        continue
-      }
       if index == endNode {
         minRisk = min(minRisk, risk)
         //print("END min \(minRisk) risk \(risk)")
+      }
+      if risk > minRisk {
+        continue
+      }
+      if visited[index] <= risk {
+        continue
       }
       visited[index] = risk
       let x = index % gridSize
