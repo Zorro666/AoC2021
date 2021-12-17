@@ -225,15 +225,22 @@ class Day15
     var risk = 0
     var node = 0
     let endNode = GetGridIndex(x: gridSize-1, y: gridSize-1)
+    var goSouth:Bool = true
     while node != endNode {
       let x = node % gridSize
       let y = node / gridSize
-      if y < gridSize - 1 {
+      if goSouth {
+        if y >= gridSize {
+          goSouth = false
+        }
+      }
+      if goSouth {
         node += gridSize
       }
       else if x < gridSize - 1 {
         node += 1
       }
+      goSouth = !goSouth
       risk += Int(grid[node])
     }
     //print("FIRST risk \(risk)")
@@ -279,10 +286,6 @@ class Day15
       let x = index % gridSize
       let y = index / gridSize
       var links:[Int] = []
-      // North
-      if y > 0 {
-        links.append(index - gridSize)
-      }
       // South
       if y < gridSize-1 {
         links.append(index + gridSize)
@@ -291,7 +294,11 @@ class Day15
       if x < gridSize - 1 {
         links.append(index + 1)
       }
-      // South
+      // North
+      if y > 0 {
+        links.append(index - gridSize)
+      }
+      // East
       if x > 0 {
         links.append(index - 1)
       }
