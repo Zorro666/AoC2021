@@ -164,7 +164,7 @@ class Day09
   func FindBasin(x:Int, y:Int) -> Int {
     var count = 0
     if visited[y*width+x] == true {
-      return count;
+      return count
     }
     if GetGrid(x: x, y: y) == 9 {
       return count

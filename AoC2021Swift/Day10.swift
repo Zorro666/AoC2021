@@ -102,8 +102,8 @@ class Day10
   var incomplete:[String] = []
   var missing:String = ""
   var line:String = ""
-  var pos:Int = 0;
-  var len:Int = 0;
+  var pos:Int = 0
+  var len:Int = 0
   
   func Execute(part1:Bool)
   {

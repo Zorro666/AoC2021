@@ -151,7 +151,7 @@ class Day16
   func Parse(lines:[String]) {
     let countBits = lines[0].count * 4
     bits = [UInt8](repeating: 0, count: countBits)
-    var index = 0;
+    var index = 0
     for l in lines {
       if l.isEmpty {
         continue

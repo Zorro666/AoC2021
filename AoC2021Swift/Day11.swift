@@ -410,15 +410,15 @@ class Day11
       flashed[i] = false
     }
     for x in 0..<12 {
-      let index = 0*12+x;
+      let index = 0*12+x
       flashed[index] = true
     }
     for x in 0..<12 {
-      let index = 11*12+x;
+      let index = 11*12+x
       flashed[index] = true
     }
     for y in 0..<12 {
-      let index = y*12+0;
+      let index = y*12+0
       flashed[index] = true
     }
     for y in 0..<12 {

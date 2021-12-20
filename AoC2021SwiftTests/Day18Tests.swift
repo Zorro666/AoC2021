@@ -110,7 +110,7 @@ class Day18Tests: XCTestCase {
     let lines = mag_1.components(separatedBy: ["\n"])
     day.Parse(lines: lines)
     let expected = 143
-    let actual = day.Magnitude();
+    let actual = day.Magnitude()
     XCTAssertEqual(expected, actual)
   }
   
@@ -118,7 +118,7 @@ class Day18Tests: XCTestCase {
     let lines = mag_2.components(separatedBy: ["\n"])
     day.Parse(lines: lines)
     let expected = 1384
-    let actual = day.Magnitude();
+    let actual = day.Magnitude()
     XCTAssertEqual(expected, actual)
   }
   
@@ -126,7 +126,7 @@ class Day18Tests: XCTestCase {
     let lines = mag_3.components(separatedBy: ["\n"])
     day.Parse(lines: lines)
     let expected = 445
-    let actual = day.Magnitude();
+    let actual = day.Magnitude()
     XCTAssertEqual(expected, actual)
   }
   
@@ -134,7 +134,7 @@ class Day18Tests: XCTestCase {
     let lines = mag_4.components(separatedBy: ["\n"])
     day.Parse(lines: lines)
     let expected = 791
-    let actual = day.Magnitude();
+    let actual = day.Magnitude()
     XCTAssertEqual(expected, actual)
   }
   
@@ -142,7 +142,7 @@ class Day18Tests: XCTestCase {
     let lines = mag_5.components(separatedBy: ["\n"])
     day.Parse(lines: lines)
     let expected = 1137
-    let actual = day.Magnitude();
+    let actual = day.Magnitude()
     XCTAssertEqual(expected, actual)
   }
   
@@ -150,7 +150,7 @@ class Day18Tests: XCTestCase {
     let lines = mag_6.components(separatedBy: ["\n"])
     day.Parse(lines: lines)
     let expected = 3488
-    let actual = day.Magnitude();
+    let actual = day.Magnitude()
     XCTAssertEqual(expected, actual)
   }
   
@@ -158,7 +158,7 @@ class Day18Tests: XCTestCase {
     let lines = mag_7.components(separatedBy: ["\n"])
     day.Parse(lines: lines)
     let expected = 29
-    let actual = day.Magnitude();
+    let actual = day.Magnitude()
     XCTAssertEqual(expected, actual)
   }
   
@@ -166,7 +166,7 @@ class Day18Tests: XCTestCase {
     let lines = mag_8.components(separatedBy: ["\n"])
     day.Parse(lines: lines)
     let expected = 129
-    let actual = day.Magnitude();
+    let actual = day.Magnitude()
     XCTAssertEqual(expected, actual)
   }
   
