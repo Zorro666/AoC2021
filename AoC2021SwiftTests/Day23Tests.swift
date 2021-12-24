@@ -5,6 +5,11 @@ class Day23Tests: XCTestCase {
 
   let day:Day23 = Day23()
   let input = """
+#############
+#...........#
+###B#C#B#D###
+  #A#D#C#A#
+  #########
 """
 
   override func setUp() {
@@ -13,13 +18,13 @@ class Day23Tests: XCTestCase {
   }
 
   func testPart1() throws {
-    let expected = 5
+    let expected = 12521
     let actual = day.Part1()
     XCTAssertEqual(expected, actual)
   }
 
-  func testPart2() throws {
-    let expected = 12
+  func veryslow_ignored_testPart2() throws {
+    let expected = 44169
     let actual = day.Part2()
     XCTAssertEqual(expected, actual)
   }
