@@ -23,7 +23,7 @@ class Day23Tests: XCTestCase {
     XCTAssertEqual(expected, actual)
   }
 
-  func veryslow_ignored_testPart2() throws {
+  func testPart2() throws {
     let expected = 44169
     let actual = day.Part2()
     XCTAssertEqual(expected, actual)
