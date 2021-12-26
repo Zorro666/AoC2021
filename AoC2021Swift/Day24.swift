@@ -63,6 +63,36 @@ import Foundation
 
 class Day24
 {
+  var zDivides:[Int] = []
+  var xAdds:[Int] = []
+  var yAdds:[Int] = []
+
+  let INSTRUCTION_INVALID = 0
+  let INSTRUCTION_INPUT = 1
+  let INSTRUCTION_ADD = 2
+  let INSTRUCTION_MUL = 3
+  let INSTRUCTION_DIV = 4
+  let INSTRUCTION_MOD = 5
+  let INSTRUCTION_EQL = 6
+
+  let REGISTER_W = 0
+  let REGISTER_X = 1
+  let REGISTER_Y = 2
+  let REGISTER_Z = 3
+  let REGISTER_IMMEDIATE = 4
+  let REGISTER_INVALID  = 5
+
+  let COUNT_REGISTERS = 4
+  let COUNT_BLOCKS = 14
+
+  var registers:[Int] = []
+  var instructions:[Int] = []
+  var aOps:[Int] = []
+  var bOps:[Int] = []
+  var immediates:[Int] = []
+
+  var blockStarts:[Int] = []
+
   func Execute(part1:Bool)
   {
     let lines = Program.ReadLines(day: "day24")
@@ -71,7 +101,7 @@ class Day24
     if (part1)
     {
       let result = Part1()
-      let expected = 2117664
+      let expected = 91897399498995
       if (result != expected)
       {
         fatalError("Part1 is broken expected \(expected) got \(result)")
@@ -81,7 +111,7 @@ class Day24
     else
     {
       let result = Part2()
-      let expected = 2073416724
+      let expected = 51121176121391
       if (result != expected)
       {
         fatalError("Part2 is broken expected \(expected) got \(result)")
@@ -90,22 +120,308 @@ class Day24
     }
   }
   
+  func GetRegister(op:String) -> Int {
+    assert(op.count > 0)
+    if op == "w" {
+      return REGISTER_W
+    }
+    else if op == "x" {
+      return REGISTER_X
+    }
+    else if op == "y" {
+      return REGISTER_Y
+    }
+    else if op == "z" {
+      return REGISTER_Z
+    }
+    return REGISTER_IMMEDIATE
+  }
+
   func Parse(lines:[String]) {
+    zDivides = [Int](repeating: 0, count: 14)
+    xAdds = [Int](repeating: 0, count: 14)
+    yAdds = [Int](repeating: 0, count: 14)
+    var i = -1
+    var searchState = 0
+    var pc = 0
     for l in lines {
       if l.isEmpty {
         continue
       }
+      let toks = l.components(separatedBy: .whitespaces)
+      var inst = INSTRUCTION_INVALID
+      let aOp = GetRegister(op: toks[1])
+      let bOp = toks.count > 2 ? GetRegister(op: toks[2]) : REGISTER_INVALID
+      let imm = bOp == REGISTER_IMMEDIATE ? Int(toks[2])! : 0
+
+      if toks[0] == "inp" {
+        inst = INSTRUCTION_INPUT
+        blockStarts.append(pc)
+      }
+      else if toks[0] == "add" {
+        inst = INSTRUCTION_ADD
+      }
+      else if toks[0] == "mul" {
+        inst = INSTRUCTION_MUL
+      }
+      else if toks[0] == "div" {
+        inst = INSTRUCTION_DIV
+      }
+      else if toks[0] == "mod" {
+        inst = INSTRUCTION_MOD
+      }
+      else if toks[0] == "eql" {
+        inst = INSTRUCTION_EQL
+      }
+      instructions.append(inst)
+      aOps.append(aOp)
+      bOps.append(bOp)
+      immediates.append(imm)
+      pc += 1
+
+      if searchState == 0 {
+        if l.starts(with: "inp w") {
+          i += 1
+          searchState = 1
+          continue
+        }
+      }
+      else if searchState == 1 {
+        if l.starts(with: "div z") {
+          let v = Int(toks[2])!
+          zDivides[i] = v
+          searchState = 2
+          continue
+        }
+      }
+      else if searchState == 2 {
+        if l.starts(with: "add x") {
+          let v = Int(toks[2])!
+          searchState = 3
+          xAdds[i] = v
+          continue
+        }
+      }
+      else if searchState == 3 {
+        if l.starts(with: "add y w") {
+          searchState = 4
+          continue
+        }
+      }
+      else if searchState == 4 {
+        if l.starts(with: "add y") {
+          let v = Int(toks[2])!
+          yAdds[i] = v
+          searchState = 0
+          continue
+        }
+      }
+    }
+    blockStarts.append(pc)
+    ClearRegisters()
+  }
+
+  func ClearRegisters() {
+    registers = [Int](repeating: 0, count: COUNT_REGISTERS)
+  }
+
+  // Reverse of a block returns possible inZ values
+  func UndoBlock(block:Int, outZ:Int, input:Int) -> [Int] {
+    let xAdd = xAdds[block]
+    let yAdd = yAdds[block]
+    let zDivide = zDivides[block]
+    var zIns:[Int] = []
+    /*
+     let z = inZ / zDivide
+     if input == inZ % 26 + xAdd {
+     return z
+     }
+     else {
+     return 26 * z + input + yAdd
+     }
+     */
+
+    /*
+     Solve for inZ
+     zDivide is 1 or 26
+     when zDivide = 1, xAdd >= 10, input = 1...9
+     therefore zDivide must b 26 for this if statement to be true
+
+     outZ = inZ / zDivide
+     if input == outZ % 26 + xAdd
+     outZ = inZ / zDivide
+
+     input - xAdd == outZ % 26
+     temp = input - xAdd
+     if temp in 0...25
+     temp is the remainder of inZ after divide by 26
+     outZ is the integer after divide by 26
+     inZ = outZ * zDivide + temp
+
+     */
+    let temp1 = input - xAdd
+    if 0 <= temp1 && temp1 <= 25 {
+      if zDivide != 26 {
+        fatalError("Bad zDivide \(zDivide)")
+      }
+      let inZ = outZ * zDivide + temp1
+      zIns.append(inZ)
+    }
+
+    /*
+     Solve for inZ
+     outZ = 26 * inZ/zDivide + input + yAdd
+     outZ - input - yAdd = 26 * inZ/zDivide
+     temp = outZ - input - yAdd
+     temp has to be a multiple of 26
+     */
+    let temp2 = outZ - input - yAdd
+    if temp2 % 26 == 0 {
+      let inZ = ( temp2 / 26 ) * zDivide
+      zIns.append(inZ)
+    }
+    return zIns
+  }
+
+  // Each block of 14 does this
+  func BlockOutput(block:Int, inZ:Int, input:Int) -> Int {
+    let xAdd = xAdds[block]
+    let yAdd = yAdds[block]
+    let zDivide = zDivides[block]
+    let z = inZ / zDivide
+    if input == inZ % 26 + xAdd {
+      return z
+    }
+    else {
+      return 26 * z + input + yAdd
     }
   }
 
+  func ExecuteInstruction(pc:Int, input:Int) -> Bool {
+    let inst = instructions[pc]
+    let aOp = aOps[pc]
+    let bOp = bOps[pc]
+    let imm = immediates[pc]
+    if inst == INSTRUCTION_INPUT {
+      registers[aOp] = input
+      return true
+    }
+    let value = bOp == REGISTER_IMMEDIATE ? imm : registers[bOp]
+    if inst == INSTRUCTION_ADD {
+      registers[aOp] += value
+    }
+    else if inst == INSTRUCTION_MUL {
+      registers[aOp] *= value
+    }
+    else if inst == INSTRUCTION_DIV {
+      registers[aOp] /= value
+    }
+    else if inst == INSTRUCTION_MOD {
+      registers[aOp] %= value
+    }
+    else if inst == INSTRUCTION_EQL {
+      registers[aOp] = registers[aOp] == value ? 1 : 0
+    }
+    else {
+      assertionFailure()
+    }
+    return false
+  }
+
+  func RunProgram(inputs:[Int]) -> Int {
+    var i = 0
+    var input = inputs[i]
+    i += 1
+    ClearRegisters()
+    for pc in 0..<instructions.count {
+      if ExecuteInstruction(pc: pc, input: input) {
+        if i < inputs.count {
+          input = inputs[i]
+          i += 1
+        }
+      }
+    }
+    return registers[REGISTER_Z]
+  }
+
+  func RunBlock(block:Int, z:Int, input:Int) -> Int {
+    let zGuess = BlockOutput(block:block, inZ:z, input:input)
+    /*
+     ClearRegisters()
+     registers[REGISTER_Z] = z
+     let start = blockStarts[block]
+     let end = blockStarts[block+1]
+     for pc in start..<end {
+     _ = ExecuteInstruction(pc: pc, input: input)
+     }
+     let zReal = registers[REGISTER_Z]
+     if zReal != zGuess {
+     fatalError("No Match \(zReal) != \(zGuess)")
+     }
+     */
+    return zGuess
+  }
+
+  func Pow10(exp:Int) -> Int {
+    var v = 1
+    for _ in 0..<exp {
+      v *= 10
+    }
+    return v
+  }
+
+  func SolveBlock(block:Int, zOuts:[Int], inValues:[Int], outValues:inout [Int]) -> [Int] {
+    var zIns:[Int] = []
+    assert(zOuts.count == inValues.count)
+    for i in 0..<zOuts.count {
+      let inValue = inValues[i]
+      let zOut = zOuts[i]
+      for input in 1...9 {
+        let tryZs = UndoBlock(block:block, outZ:zOut, input:input)
+        /*
+        for tryZ in tryZs {
+          let z = RunBlock(block: block, z: tryZ, input: input)
+          if z != zOut {
+            fatalError("Bad tryZ \(tryZ)")
+          }
+        }
+        */
+        for z in tryZs {
+          zIns.append(z)
+          let v = input * Pow10(exp: 13 - block) + inValue
+          outValues.append(v)
+        }
+      }
+    }
+    // print("\(block) : \(zIns.count)")
+    return zIns
+  }
+
+  func Solve() -> [Int] {
+    var zOuts:[Int] = []
+    zOuts.append(0)
+    var vals:[Int] = []
+    vals.append(0)
+    for b in 0...13 {
+      let inVals = vals
+      vals = []
+      zOuts = SolveBlock(block: 13 - b, zOuts: zOuts, inValues: inVals, outValues:&vals)
+    }
+    assert(0 == zOuts.last)
+    // print("\(zOuts.last) => \(vals.last)"
+    return vals
+  }
+
   func Part1() -> Int {
-    return 123
+    let inputs = Solve()
+    return inputs.last!
   }
-  
+
   func Part2() -> Int {
-    return 5443
+    let inputs = Solve()
+    return inputs.first!
   }
-  
+
   func Run()
   {
     Execute(part1: true)
@@ -115,42 +431,83 @@ class Day24
 
 /*
 
+ div z 1
+ add x 15
+ add y 4
+
+ div z 1
+ add x 14
+ add y 16
+
+ div z 1
+ add x 11
+ add y 14
+
+ div z 26
+ add x -13
+ add y 3
+
+ div z 1
+ add x 14
+ add y 11
+
+ div z 1
+ add x 15
+ add y 13
+
+ div z 26
+ add x -7
+ add y 11
+
+ div z 1
+ add x 10
+ add y 7
+
+ div z 26
+ add x -12
+ add y 12
+
+ div z 1
+ add x 15
+ add y 15
+
+ div z 26
+ add x -16
+ add y 13
+
+ div z 26
+ add x -9
+ add y 1
+
+ div z 26
+ add x -8
+ add y 15
+
+ div z 26
+ add x -8
+ add y 4
+
+ */
+
 //inp w
-w = input0
 //mul x 0
-x = 0
 //add x z
-x = 0
 //mod x 26
-x = 0
 //div z 1
-z = 0
 //add x 15
-x = 15
 //eql x w
-x = 0
 //eql x 0
-x = 1
 //mul y 0
-y = 0
 //add y 25
-y = 25
 //mul y x
-y = 25
 //add y 1
-y = 26
 //mul z y
-z = 0
 //mul y 0
-y = 0
 //add y w
-y = input0
 //add y 4
-y = input0 + 4
 //mul y x
-y = input0 + 4
 //add z y
-z = input0 + 4
+
 //inp w
 //mul x 0
 //add x z
@@ -169,6 +526,7 @@ z = input0 + 4
 //add y 16
 //mul y x
 //add z y
+
 //inp w
 //mul x 0
 //add x z
@@ -187,6 +545,7 @@ z = input0 + 4
 //add y 14
 //mul y x
 //add z y
+
 //inp w
 //mul x 0
 //add x z
@@ -205,6 +564,7 @@ z = input0 + 4
 //add y 3
 //mul y x
 //add z y
+
 //inp w
 //mul x 0
 //add x z
@@ -223,6 +583,7 @@ z = input0 + 4
 //add y 11
 //mul y x
 //add z y
+
 //inp w
 //mul x 0
 //add x z
@@ -241,6 +602,7 @@ z = input0 + 4
 //add y 13
 //mul y x
 //add z y
+
 //inp w
 //mul x 0
 //add x z
@@ -259,6 +621,7 @@ z = input0 + 4
 //add y 11
 //mul y x
 //add z y
+
 //inp w
 //mul x 0
 //add x z
@@ -277,6 +640,7 @@ z = input0 + 4
 //add y 7
 //mul y x
 //add z y
+
 //inp w
 //mul x 0
 //add x z
@@ -295,6 +659,7 @@ z = input0 + 4
 //add y 12
 //mul y x
 //add z y
+
 //inp w
 //mul x 0
 //add x z
@@ -313,6 +678,7 @@ z = input0 + 4
 //add y 15
 //mul y x
 //add z y
+
 //inp w
 //mul x 0
 //add x z
@@ -331,6 +697,7 @@ z = input0 + 4
 //add y 13
 //mul y x
 //add z y
+
 //inp w
 //mul x 0
 //add x z
@@ -349,6 +716,7 @@ z = input0 + 4
 //add y 1
 //mul y x
 //add z y
+
 //inp w
 //mul x 0
 //add x z
@@ -367,40 +735,22 @@ z = input0 + 4
 //add y 15
 //mul y x
 //add z y
+
 //inp w
 //mul x 0
-x = 0
 //add x z
-x = z
 //mod x 26
-x %= 26
 //div z 26
-z /= 26
 //add x -8
-x = x - 8
 //eql x w
 //eql x 0
 //mul y 0
-y = 0
 //add y 25
-y = 25
 //mul y x
-y = 25 * x
 //add y 1
-y = 25 * x + 1
 //mul z y
-z = z * y
 //mul y 0
-y = 0
 //add y w
-y = w
 //add y 4
-y += 4
 //mul y x
-y *= x
 //add z y
-z += y
-
-// z : 1 is valid, 0 is invalid
-
-*/
